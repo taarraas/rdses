@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+
+    <bean id="fileService" class="ua.kiev.univ.slave.impl.FileServiceImpl"/>
+
+    <bean id="searchTask" class="ua.kiev.univ.slave.model.SearchTask">
+        <constructor-arg ref="inputQueueGateway"/>
+    </bean>
+
+    <bean id="searchService" class="ua.kiev.univ.slave.impl.SearchServiceImpl">
+        <property name="searchTask" ref="searchTask"/>
+    </bean>
+
+</beans>
