@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 public class Network {
 
     public static String getPublicIP() {
-        InetAddress address = null;
+        InetAddress address;
         try {
             address = InetAddress.getLocalHost();
         } catch (UnknownHostException e) {

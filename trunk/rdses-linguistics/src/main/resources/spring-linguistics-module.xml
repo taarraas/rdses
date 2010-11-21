@@ -9,4 +9,11 @@
 
     <import resource="classpath:spring-jms-module.xml" />
 
+    <bean name="compositeRawDocumentConverter" class="ua.kiev.univ.linguistics.convert.CompositeRawDocumentConverter">
+        <constructor-arg>
+            <list>
+                <bean class="ua.kiev.univ.linguistics.convert.TxtToDocConverter"/>
+            </list>
+        </constructor-arg>
+    </bean>
 </beans>

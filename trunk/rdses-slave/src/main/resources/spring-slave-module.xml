@@ -8,6 +8,36 @@
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
     <import resource="classpath:spring-jms-module.xml" />
-    <import resource="classpath:spring-slave-beans.xml" />
+
+    <bean id="fileService" class="ua.kiev.univ.slave.FileServiceImpl"/>
+
+    <bean id="searchTask" class="ua.kiev.univ.slave.SearchTask">
+        <property name="inputQueueGateway" ref="inputQueueGateway"/>
+    </bean>
+
+    <bean id="searchService" class="ua.kiev.univ.slave.SearchServiceImpl">
+        <property name="searchTask" ref="searchTask"/>
+    </bean>
+
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="registryHost" value="localhost"/>
+        <property name="registryPort" value="8080"/>
+        <property name="service" ref="fileService"/>
+        <property name="serviceName" value="#{T(ua.kiev.univ.common.Network).getPublicIP()}-FileService"/>
+        <property name="serviceInterface" value="ua.kiev.univ.slave.FileService"/>
+    </bean>
+
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="registryHost" value="localhost"/>
+        <property name="registryPort" value="8080"/>
+        <property name="service" ref="searchService"/>
+        <property name="serviceName" value="#{T(ua.kiev.univ.common.Network).getPublicIP()}-SearchService"/>
+        <property name="serviceInterface" value="ua.kiev.univ.slave.SearchService"/>
+    </bean>
+
+    <bean id="slaveRegistry" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:8080/SlaveRegistry"/>
+        <property name="serviceInterface" value="ua.kiev.univ.master.SlaveRegistry"/>
+    </bean>
 
 </beans>
