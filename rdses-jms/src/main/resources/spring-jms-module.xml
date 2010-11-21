@@ -7,6 +7,31 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
-    <import resource="classpath:spring-jms-beans.xml" />
+    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="receiveTimeout" value="5000" />
+    </bean>
+
+    <bean id="inputQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="rdses.inputqueue"/>
+    </bean>
+
+    <bean id="outputQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="rdses.outputqueue"/>
+    </bean>
+
+    <bean id="inputQueueGateway" class="ua.kiev.univ.jms.impl.InputQueueGateway">
+        <property name="jmsTemplate" ref="jmsTemplate" />
+        <property name="destination" ref="inputQueue" />
+    </bean>
+
+    <bean id="outputQueueGateway" class="ua.kiev.univ.jms.impl.OutputQueueGateway">
+        <property name="jmsTemplate" ref="jmsTemplate" />
+        <property name="destination" ref="outputQueue" />
+    </bean>
 
 </beans>

@@ -8,5 +8,14 @@
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
     <import resource="classpath:spring-jms-module.xml" />
+    
+    <bean name="slaveRegistry" class="ua.kiev.univ.master.SlaveRegistryImpl"/>
+
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="registryPort" value="8080"/>
+        <property name="service" ref="slaveRegistry"/>
+        <property name="serviceName" value="SlaveRegistry"/>
+        <property name="serviceInterface" value="ua.kiev.univ.master.SlaveRegistry"/>
+    </bean>
 
 </beans>
