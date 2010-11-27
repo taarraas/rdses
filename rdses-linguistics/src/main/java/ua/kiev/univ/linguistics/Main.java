@@ -9,10 +9,7 @@ import ua.kiev.univ.jms.impl.ProcessedDocument;
 import ua.kiev.univ.jms.impl.RawDocument;
 import ua.kiev.univ.linguistics.convert.RawDocumentConverter;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * @author jamanal
@@ -63,10 +60,16 @@ public class Main {
                 logger.warn("Failed to convert document " + rawDocument.getName() + " from " + rawDocument.getSource());
                 continue;
             }
-            // TODO: Stas, change null to appropriate values
-            ProcessedDocument processedDocument = new ProcessedDocument(null, null, null);
-            processedDocument.setGroup(clust.process(file));             // setting group is only here
-
+            String group = clust.process(file);
+            FileInputStream inputStream = new FileInputStream(file);
+            byte[] data;
+            try {
+                data = IOUtils.toByteArray(inputStream);
+            } finally {
+                IOUtils.closeQuietly(inputStream);
+            }
+            ProcessedDocument processedDocument =
+                    new ProcessedDocument(rawDocument.getName(), data, rawDocument.getSource(), group);
             outputQueueGateway.push(processedDocument);
         }
     }
