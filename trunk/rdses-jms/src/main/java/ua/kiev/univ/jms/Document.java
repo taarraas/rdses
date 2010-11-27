@@ -12,7 +12,7 @@ public abstract class Document implements Serializable {
     private byte[] data;
 
     /**
-     * @param name filename of the document (including extension)
+     * @param name filename of the document (including extension and path)
      * @param data document's content
      */
     protected Document(String name, byte[] data) {

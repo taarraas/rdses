@@ -7,8 +7,8 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
-    <import resource="classpath:spring-jms-module.xml" />
-    
+    <import resource="classpath:spring-jms-module.xml"/>
+
     <bean name="slaveRegistry" class="ua.kiev.univ.master.SlaveRegistryImpl"/>
 
     <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
@@ -16,6 +16,15 @@
         <property name="service" ref="slaveRegistry"/>
         <property name="serviceName" value="SlaveRegistry"/>
         <property name="serviceInterface" value="ua.kiev.univ.master.SlaveRegistry"/>
+    </bean>
+
+    <bean id="outputQueueListener" class="ua.kiev.univ.master.OutputQueueListener"/>
+
+    <bean id="jmsContainer" class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="outputQueue"/>
+        <property name="messageListener" ref="outputQueueListener"/>
+        <property name="concurrentConsumers" value="1"/>
     </bean>
 
 </beans>

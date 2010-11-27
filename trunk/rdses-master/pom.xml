@@ -23,6 +23,11 @@
             <version>${springVersion}</version>
         </dependency>
         <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
             <groupId>ua.kiev.univ</groupId>
             <artifactId>rdses-jms</artifactId>
             <version>1.0</version>
