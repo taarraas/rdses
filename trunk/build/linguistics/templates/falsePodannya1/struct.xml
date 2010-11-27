@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocumentStructure>
+    <StructureBlock no="0">
+        <Justify>left</Justify>
+        <Indent>5130</Indent>
+    </StructureBlock>
+    <StructureBlock no="1">
+        <Justify>center</Justify>
+        <Indent>-900</Indent>
+    </StructureBlock>
+    <StructureBlock no="2">
+        <Justify>left</Justify>
+        <Indent>0</Indent>
+    </StructureBlock>
+</DocumentStructure>

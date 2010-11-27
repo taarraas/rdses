@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocumentStructure>
+    <StructureBlock no="0">
+        <Justify>center</Justify>
+        <Indent>-180</Indent>
+    </StructureBlock>
+    <StructureBlock no="1">
+        <Justify>left</Justify>
+        <Indent>0</Indent>
+    </StructureBlock>
+    <StructureBlock no="2">
+        <Justify>center</Justify>
+        <Indent>0</Indent>
+    </StructureBlock>
+    <StructureBlock no="3">
+        <Justify>left</Justify>
+        <Indent>0</Indent>
+    </StructureBlock>
+    <StructureBlock no="4">
+        <Justify>center</Justify>
+        <Indent>0</Indent>
+    </StructureBlock>
+    <StructureBlock no="5">
+        <Justify>left</Justify>
+        <Indent>0</Indent>
+    </StructureBlock>
+</DocumentStructure>

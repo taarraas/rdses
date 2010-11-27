@@ -20,13 +20,22 @@ import java.io.OutputStream;
  */
 public class Main {
 
-    public static final String EXAMPLESDIR = "~/proj/DocumentSystematizer/archive/";
     private static final Logger logger = Logger.getLogger(Main.class);
 
+    private static String getTemplatesDir() {
+        File dir = new File("templates");
+        if (dir.isDirectory())
+            return dir.getAbsolutePath();
+        dir = new File("build/linguistics/templates");
+        if (dir.isDirectory())
+            return dir.getAbsolutePath();
+        throw new RuntimeException("Failed to determine templates directory path");
+    }
 
-    public static void main(String[] args) throws IOException{
-        logger.info("Initializing. Loading examples from " + EXAMPLESDIR);
-        Clusterizer clust = new Clusterizer(EXAMPLESDIR);
+    public static void main(String[] args) throws IOException {
+        String templatesDirectory = getTemplatesDir();
+        logger.info("Initializing. Loading examples from " + templatesDirectory);
+        Clusterizer clust = new Clusterizer(templatesDirectory);
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-linguistics-module.xml");
         InputQueueGateway inputQueueGateway = context.getBean(InputQueueGateway.class);
         OutputQueueGateway outputQueueGateway = context.getBean(OutputQueueGateway.class);
