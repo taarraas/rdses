@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * @author sshyiko@luxoft.com
+ * @author jamanal
  * @version Nov 21, 2010
  */
 public class CompositeRawDocumentConverter implements RawDocumentConverter {

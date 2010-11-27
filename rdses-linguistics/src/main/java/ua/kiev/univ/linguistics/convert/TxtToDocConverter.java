@@ -17,7 +17,7 @@ import org.apache.poi.hwpf.usermodel.*;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 /**
- * @author sshyiko@luxoft.com
+ * @author jamanal
  * @version Nov 21, 2010
  */
 public class TxtToDocConverter implements RawDocumentConverter {

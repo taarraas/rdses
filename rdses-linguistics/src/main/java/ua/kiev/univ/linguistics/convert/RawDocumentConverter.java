@@ -5,7 +5,7 @@ import ua.kiev.univ.jms.impl.RawDocument;
 import java.io.File;
 
 /**
- * @author sshyiko@luxoft.com
+ * @author jamanal
  * @version Nov 21, 2010
  */
 public interface RawDocumentConverter {
