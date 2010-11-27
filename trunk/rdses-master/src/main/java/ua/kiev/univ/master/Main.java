@@ -3,7 +3,7 @@ package ua.kiev.univ.master;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * @author sshyiko@luxoft.com
+ * @author jamanal
  * @version Nov 27, 2010
  */
 public class Main {

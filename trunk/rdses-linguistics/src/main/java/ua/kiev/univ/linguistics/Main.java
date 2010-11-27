@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * @author sshyiko@luxoft.com
+ * @author jamanal
  * @version Nov 21, 2010
  */
 public class Main {
