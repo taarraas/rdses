@@ -20,7 +20,7 @@
     </bean>
 
     <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
-        <property name="registryHost" value="localhost"/>
+        <property name="registryHost" value="${master.host:localhost}"/>
         <property name="registryPort" value="8080"/>
         <property name="service" ref="fileService"/>
         <property name="serviceName" value="#{T(ua.kiev.univ.common.Network).getPublicIP()}-FileService"/>
@@ -28,7 +28,7 @@
     </bean>
 
     <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
-        <property name="registryHost" value="localhost"/>
+        <property name="registryHost" value="${master.host:localhost}"/>
         <property name="registryPort" value="8080"/>
         <property name="service" ref="searchService"/>
         <property name="serviceName" value="#{T(ua.kiev.univ.common.Network).getPublicIP()}-SearchService"/>
@@ -36,7 +36,7 @@
     </bean>
 
     <bean id="slaveRegistry" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
-        <property name="serviceUrl" value="rmi://localhost:8080/SlaveRegistry"/>
+        <property name="serviceUrl" value="rmi://${master.host:localhost}:8080/SlaveRegistry"/>
         <property name="serviceInterface" value="ua.kiev.univ.master.SlaveRegistry"/>
     </bean>
 

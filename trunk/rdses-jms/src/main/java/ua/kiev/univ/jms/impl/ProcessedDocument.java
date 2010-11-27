@@ -7,7 +7,12 @@ import ua.kiev.univ.jms.Document;
  * @version 2010-11-08
  */
 public class ProcessedDocument extends Document {
-    String group;
+
+    private String group;
+
+    public ProcessedDocument(String name, byte[] data, String comment) {
+        super(name, data);
+    }
 
     public String getGroup() {
         return group;
@@ -15,9 +20,5 @@ public class ProcessedDocument extends Document {
 
     public void setGroup(String group) {
         this.group = group;
-    }
-    
-    public ProcessedDocument(String name, byte[] data, String comment) {
-        super(name, data);
     }
 }
