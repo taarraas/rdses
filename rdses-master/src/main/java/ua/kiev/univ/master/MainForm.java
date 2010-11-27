@@ -13,6 +13,10 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -26,17 +30,19 @@ import java.util.concurrent.Executors;
 public class MainForm implements Observer {
 
     private JList slavesList;
-    private JTable processingResults;
     private JTree filesystemTree;
     private JPanel rootPanel;
     private JButton startButton;
     private JList extensionsList;
     private JLabel statusLabel;
+    private JList processedFiles;
 
     public MainForm(ApplicationContext context) {
         init();
-        Observable observable = (Observable) context.getBean("slaveRegistry");
-        observable.addObserver(this);
+        Observable slaveRegistry = (Observable) context.getBean("slaveRegistry");
+        slaveRegistry.addObserver(this);
+        OutputQueueListener outputQueueListener = (OutputQueueListener) context.getBean("outputQueueListener");
+        outputQueueListener.addObserver(this);
     }
 
     public void init() {
@@ -66,6 +72,22 @@ public class MainForm implements Observer {
 */
         filesystemTree.setEditable(true);
         filesystemTree.setModel(new DefaultTreeModel(null));
+
+        DefaultListModel filesModel = new DefaultListModel();
+        processedFiles.setModel(filesModel);
+        processedFiles.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    File file = (File) processedFiles.getSelectedValue();
+                    try {
+                        Desktop.getDesktop().open(file);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
 
         DefaultListModel extensionsModel = new DefaultListModel();
         extensionsList.setModel(extensionsModel);
@@ -106,6 +128,10 @@ public class MainForm implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
+        if (observable instanceof OutputQueueListener) {
+            DefaultListModel model = (DefaultListModel) processedFiles.getModel();
+            model.add(0, (File) o);
+        } else
         if (observable instanceof SlaveRegistryImpl) {
             String ip = (String) o;
             DefaultListModel model = (DefaultListModel) slavesList.getModel();

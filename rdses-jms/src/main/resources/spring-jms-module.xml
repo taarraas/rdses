@@ -18,7 +18,7 @@
 
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="connectionFactory" />
-        <property name="receiveTimeout" value="5000" />
+        <!--<property name="receiveTimeout" value="5000" />-->
     </bean>
 
     <bean id="inputQueue" class="org.apache.activemq.command.ActiveMQQueue">

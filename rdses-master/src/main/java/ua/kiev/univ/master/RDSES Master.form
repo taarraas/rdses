@@ -72,7 +72,7 @@
           </grid>
         </constraints>
         <properties>
-          <dividerLocation value="225"/>
+          <dividerLocation value="120"/>
           <dividerSize value="6"/>
           <orientation value="0"/>
           <resizeWeight value="0.9"/>
@@ -86,7 +86,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="7a938" class="javax.swing.JTable" binding="processingResults">
+              <component id="b704" class="javax.swing.JList" binding="processedFiles">
                 <constraints/>
                 <properties/>
               </component>
