@@ -25,7 +25,6 @@ import java.util.concurrent.Executors;
  */
 public class MainForm implements Observer {
 
-    private Executor executor = Executors.newFixedThreadPool(10);
     private JList slavesList;
     private JTable processingResults;
     private JTree filesystemTree;
@@ -130,11 +129,6 @@ public class MainForm implements Observer {
         frame.setBounds(frame.getX(), frame.getY(), 1000, 500);
         setOnScreenCenter(frame);
         frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-master-module.xml");
-        new MainForm(context).show();
     }
 
     private static void setOnScreenCenter(JFrame frame) {
