@@ -16,7 +16,7 @@ import ua.kiev.univ.linguistics.MakeKeywordList.WordCnt;
 public class Clusterizer {
     private static final Logger logger = Logger.getLogger(Main.class);
     public static double compare(Map<String, Integer> other, ArrayList<WordCnt> words, Set<String> stopList) {
-        int cnt=0, sum=0;
+        int cnt=0, sum=0, possibleCnt = 0;
         for (WordCnt wordCnt : words) {
             if (stopList.contains(wordCnt.word)) {
                 continue;
@@ -25,8 +25,9 @@ public class Clusterizer {
                 cnt++;
                 sum += wordCnt.getTotalWeight();
             }
+            possibleCnt+=wordCnt.cnt;
         }
-        return cnt;
+        return (double)cnt/possibleCnt;
     }
     public String process(File file) throws IOException{
         Map<String, String> thisText = MSWordDocumentExtractor.extract(file.toString());
@@ -41,7 +42,10 @@ public class Clusterizer {
                 best = entry.getKey();
             }
         }
-        return best;
+        if (max < 0.3) {
+            return "unclassified";
+        }
+        return best+":"+max;
     }
     Set<String> stopList;
     Map<String, ArrayList<WordCnt> > keywords;
@@ -89,11 +93,12 @@ public class Clusterizer {
             }
         }
         stopList = MakeStopList.generateStopList(othersForBlacklist.toArray(new Map[othersForBlacklist.size()]));
-        logger.debug("\n----- Stop list:");
+        StringBuffer sb = new StringBuffer();
+        sb.append("\n----- Stop list:");
         for (String string : stopList) {
-            System.out.print(string+" ");
+            sb.append(string+" ");
         }
-
+        logger.debug(sb.toString());
         //KEYWORDS
         logger.debug("\n\n----- Keywords:");
         keywords = new TreeMap<String, ArrayList<WordCnt>>();
@@ -106,10 +111,12 @@ public class Clusterizer {
                 }
             }
             keywords.put(group.getKey(), MakeKeywordList.generateKeywords(docsInGroup.toArray(new Map[docsInGroup.size()]), stopList));
-            System.out.println("\n>"+group.getKey());
+            sb = new StringBuffer();
+            sb.append("\n>"+group.getKey());
             for (WordCnt wordCnt : keywords.get(group.getKey())) {
-                System.out.print(wordCnt.getWord()+":"+wordCnt.goodness()+" ");
+                sb.append(wordCnt.getWord()+":"+wordCnt.goodness()+" ");
             }
+            logger.debug(sb.toString());
         }
 
     }
