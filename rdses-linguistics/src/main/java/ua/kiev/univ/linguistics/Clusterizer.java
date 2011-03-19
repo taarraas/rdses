@@ -6,6 +6,7 @@
 package ua.kiev.univ.linguistics;
 import java.io.*;
 import java.util.*;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import ua.kiev.univ.linguistics.MakeKeywordList.WordCnt;
 
@@ -29,6 +30,25 @@ public class Clusterizer {
         }
         return (double)cnt/possibleCnt;
     }
+    public ClusterizationResult getClusterizationResult(File file) {
+        ClusterizationResult result = new ClusterizationResult();
+        Map<String, String> thisText;
+        try {
+            thisText = MSWordDocumentExtractor.extract(file.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return result;
+        }
+        String otherText = thisText.get(MSWordDocumentExtractor.OTHER);
+        Map<String, Integer> other = WordFrequencyMap.getWordFrequencyMap(otherText);
+        double max = 0;
+        String best = null;
+        for (Map.Entry<String, ArrayList<WordCnt>> entry : keywords.entrySet()) {
+            double cur = compare(other, entry.getValue(), stopList);
+            result.getPercentages().put(entry.getKey(), cur);
+        }
+        return result;
+    }
     public String process(File file) throws IOException{
         Map<String, String> thisText = MSWordDocumentExtractor.extract(file.toString());
         String otherText = thisText.get(MSWordDocumentExtractor.OTHER);
@@ -50,6 +70,7 @@ public class Clusterizer {
     Set<String> stopList;
     Map<String, ArrayList<WordCnt> > keywords;
     private void load(String directory) throws IOException {
+        logger.setLevel(Level.DEBUG);
         File rootDir = new File(directory);
         if (!rootDir.exists() || !rootDir.isDirectory()) {
             throw new IOException("Directory not exists " + rootDir);
@@ -123,6 +144,23 @@ public class Clusterizer {
 
     public Clusterizer(String directory) throws IOException {
         load(directory);
+    }
+    private static String getTemplatesDir() {
+        File dir = new File("templates");
+        if (dir.isDirectory())
+            return dir.getAbsolutePath();
+        dir = new File("build/linguistics/templates");
+        if (dir.isDirectory())
+            return dir.getAbsolutePath();
+        dir = new File("/home/taras/rdses/templates");
+        if (dir.isDirectory())
+            return dir.getAbsolutePath();
+
+
+        throw new RuntimeException("Failed to determine templates directory path");
+    }
+    public Clusterizer() throws IOException {
+        load(getTemplatesDir());
     }
 
 }
