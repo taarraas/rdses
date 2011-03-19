@@ -46,7 +46,7 @@ public class ClusterizationResult {
         Collections.sort(list);
         StringBuffer buffer = new StringBuffer();
         for (PSD psd : list) {
-            buffer.append(psd.theme+":"+psd.intersectionRate+" ");
+            buffer.append(psd.theme+":"+(int)(psd.intersectionRate*100)+" ");
         }
         return buffer.toString();
     }

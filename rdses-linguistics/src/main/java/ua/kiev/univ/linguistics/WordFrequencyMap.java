@@ -15,7 +15,7 @@ import java.util.Set;
  */
 public class WordFrequencyMap {
     public static Map<String, Integer> getWordFrequencyMap(String text) {
-        String words[]=text.split("[\\s\\“\\”\\d-+=_%$*#&\\^/\\\\,!?:(){};\\.\\\"]+");
+        String words[]=text.split("[^а-яА-ЯіІєЄїЇ']+");
         Map<String, Integer> ret=new HashMap<String, Integer>();
         for (String string : words) {
             String cur=Normalizator.normalize(string);
