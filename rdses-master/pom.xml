@@ -28,13 +28,13 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ua.kiev.univ.master.Main</mainClass>
-                            <packageName>ua.kiev.univ.master</packageName>
+                            <mainClass>ua.kiev.univ.ui.MainForm</mainClass>
+                            <packageName>ua.kiev.univ.ui</packageName>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
                     </archive>
-                    <outputDirectory>${project.parent.basedir}/build/master</outputDirectory>
+                    <outputDirectory>${project.parent.basedir}/build/local-ui</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -49,7 +49,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.parent.basedir}/build/master/lib</outputDirectory>
+                            <outputDirectory>${project.parent.basedir}/build/local-ui/lib</outputDirectory>
                             <overWriteReleases>true</overWriteReleases>
                             <overWriteSnapshots>true</overWriteSnapshots>
                             <excludeTransitive>false</excludeTransitive>
