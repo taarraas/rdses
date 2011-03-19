@@ -24,6 +24,7 @@
         <module>rdses-master-api</module>
         <module>rdses-master</module>
         <module>rdses-linguistics</module>
+        <module>rdses-local-ui</module>
     </modules>
 
     <build>
